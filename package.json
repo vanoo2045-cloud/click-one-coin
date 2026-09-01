@@ -1,0 +1,19 @@
+{
+  "name": "click-one",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "deploy": "npm run build && firebase deploy",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@vite-pwa/nuxt": "^1.1.1",
+    "nuxt": "^4.4.2",
+    "vue": "^3.5.31",
+    "vue-router": "^5.0.4"
+  }
+}
