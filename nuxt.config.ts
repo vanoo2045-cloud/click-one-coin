@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   
 
   app: {
-    baseURL: '/click-one/',
+    baseURL: '/click-one-coin/',
     head: {
       meta: [
         {
@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   modules: ['@vite-pwa/nuxt'],
 
   pwa: {
-    base: '/click-one/',
+    base: '/click-one-coin/',
     registerType: 'prompt',
     client: {
       registerPlugin: false
@@ -46,7 +46,8 @@ export default defineNuxtConfig({
       theme_color: '#a855f7',
       background_color: '#a855f7',
       display: 'standalone',
-      start_url: '/click-one/',
+      start_url: '/click-one-coin/',
+      scope: '/click-one-coin/',
       icons: [
         {
           src: '/icons/icon-192x192.png',
