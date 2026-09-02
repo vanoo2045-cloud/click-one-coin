@@ -2,7 +2,16 @@ export default defineNuxtConfig({
   // Отключаем SSR — приложение будет работать полностью в браузере
   ssr: false,
 
+  vite: {
+    server: {
+      allowedHosts: ['.loca.lt']
+    }
+  },
+
+  
+
   app: {
+    baseURL: '/click-one/',
     head: {
       meta: [
         {
@@ -25,6 +34,7 @@ export default defineNuxtConfig({
   modules: ['@vite-pwa/nuxt'],
 
   pwa: {
+    base: '/click-one/',
     registerType: 'prompt',
     client: {
       registerPlugin: false
@@ -36,7 +46,7 @@ export default defineNuxtConfig({
       theme_color: '#a855f7',
       background_color: '#a855f7',
       display: 'standalone',
-      start_url: '/',
+      start_url: '/click-one/',
       icons: [
         {
           src: '/icons/icon-192x192.png',
