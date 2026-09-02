@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   // Отключаем SSR — приложение будет работать полностью в браузере
-  ssr: false,
+  ssr: false, 
 
   vite: {
     server: {
@@ -12,6 +12,8 @@ export default defineNuxtConfig({
 
   app: {
     baseURL: '/click-one-coin/',
+
+    
     head: {
       meta: [
         {
