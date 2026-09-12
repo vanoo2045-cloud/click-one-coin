@@ -59,7 +59,7 @@ function onClick() {
 <style scoped>
 
 .mint-button {
-  background-image: url("C:\NuxtGame\click-one\public\newShareSaveImage.png");
+  background-image: url("C:\NuxtGame\click-one\public\anvil3.png");
   background-size:contain;
   background-repeat: no-repeat;
   align-items: center;
