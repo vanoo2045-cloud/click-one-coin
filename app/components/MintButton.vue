@@ -1,19 +1,24 @@
 <template>
   <button
     class="mint-button clickable"
-     :class="[coinColorClass, { 'is-disabled': disabled }]" 
+    :class="[coinColorClass, {
+      'is-disabled': disabled,
+      'is-sparking': sparksVisible
+    }]"
     :disabled="disabled"
     @touchstart.passive="onTouchStart"
     @click="onClick"
   >
-    
+    <span class="spark-burst" aria-hidden="true">
+      <i v-for="spark in 8" :key="spark"></i>
+    </span>
   </button>
 
 
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, nextTick, onBeforeUnmount, ref } from 'vue'
 
 const props = defineProps({
   coins: {
@@ -29,6 +34,8 @@ const props = defineProps({
 const emit = defineEmits(['mint'])
 
 let lastTouchTime = 0
+let sparkTimer = null
+const sparksVisible = ref(false)
 
 const coinColorClass = computed(() => {
   if (props.coins >= 10000) return 'coin-legendary'
@@ -41,7 +48,20 @@ function fireMint() {
     return
   }
 
+  playSparks()
   emit('mint')
+}
+
+function playSparks() {
+  sparksVisible.value = false
+  clearTimeout(sparkTimer)
+
+  nextTick(function () {
+    sparksVisible.value = true
+    sparkTimer = setTimeout(function () {
+      sparksVisible.value = false
+    }, 480)
+  })
 }
 
 function onTouchStart() {
@@ -54,11 +74,17 @@ function onClick() {
   if (now - lastTouchTime < 500) return
   fireMint()
 }
+
+onBeforeUnmount(function () {
+  clearTimeout(sparkTimer)
+})
 </script>
 
 <style scoped>
 
 .mint-button {
+  position: relative;
+  overflow: visible;
   background-image: url("/click-one-coin/anvil3.png");
   background-size:contain;
   background-repeat: no-repeat;
@@ -96,11 +122,61 @@ function onClick() {
   font-size: 3rem;
 }
 
+.spark-burst {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  z-index: 3;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.spark-burst i {
+  --spark-x: 0px;
+  --spark-y: -58px;
+  position: absolute;
+  width: clamp(4px, 1.2vw, 7px);
+  aspect-ratio: 1;
+  opacity: 0;
+  background: linear-gradient(135deg, #fff9b0, #ffb21c 55%, #e65a0b);
+  clip-path: polygon(50% 0, 63% 36%, 100% 50%, 63% 64%, 50% 100%, 37% 64%, 0 50%, 37% 36%);
+  filter: drop-shadow(0 0 4px #ff8a00);
+}
+
+.mint-button.is-sparking .spark-burst i {
+  animation: spark-flight 0.46s ease-out forwards;
+}
+
+.spark-burst i:nth-child(1) { --spark-x: -62px; --spark-y: -48px; }
+.spark-burst i:nth-child(2) { --spark-x: -30px; --spark-y: -72px; animation-delay: 0.02s; }
+.spark-burst i:nth-child(3) { --spark-x: 8px; --spark-y: -78px; animation-delay: 0.04s; }
+.spark-burst i:nth-child(4) { --spark-x: 48px; --spark-y: -58px; animation-delay: 0.01s; }
+.spark-burst i:nth-child(5) { --spark-x: 68px; --spark-y: -18px; animation-delay: 0.05s; }
+.spark-burst i:nth-child(6) { --spark-x: 50px; --spark-y: 28px; animation-delay: 0.03s; }
+.spark-burst i:nth-child(7) { --spark-x: -45px; --spark-y: 25px; animation-delay: 0.06s; }
+.spark-burst i:nth-child(8) { --spark-x: -72px; --spark-y: -8px; animation-delay: 0.03s; }
+
 @keyframes coinPop {
   0% { transform: scale(1); }
   30% { transform: scaleX(1.15) scaleY(0.85); }
   60% { transform: scaleX(0.92) scaleY(1.08); }
   100% { transform: scale(1); }
+}
+
+@keyframes spark-flight {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.25) rotate(0);
+  }
+  22% {
+    opacity: 1;
+    transform: translate(0, -8px) scale(1.15) rotate(45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--spark-x), var(--spark-y)) scale(0.15) rotate(150deg);
+  }
 }
 
 @keyframes floatGlow {
@@ -128,5 +204,11 @@ function onClick() {
 .coin-legendary {
   box-shadow: 0 0 15px rgba(204, 15, 15, 0.527);
   background-color: rgba(101, 5, 5, 0.433);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mint-button.is-sparking .spark-burst i {
+    animation: none;
+  }
 }
 </style>

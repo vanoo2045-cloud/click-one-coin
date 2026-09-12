@@ -8,8 +8,9 @@
         <button
           type="button"
           class="shop-button upgrade_coin"
+          :class="{ 'is-animating': animatedButton === 'iron' }"
           :disabled="coins < ironCost"
-          @click="$emit('buy-iron')"
+          @click="animateAndEmit('iron', 'buy-iron')"
         >
       
         </button>
@@ -35,8 +36,9 @@
         <button
           type="button"
           class="shop-button upgrade_hammer"
+          :class="{ 'is-animating': animatedButton === 'hammer' }"
           :disabled="coins < hammerCost"
-          @click="$emit('upgrade-hammer')"
+          @click="animateAndEmit('hammer', 'upgrade-hammer')"
         >
         </button>
       </div>
@@ -47,6 +49,8 @@
 </template>
 
 <script setup>
+import { nextTick, onBeforeUnmount, ref } from 'vue'
+
 defineProps({
   coins: {
     type: Number,
@@ -94,7 +98,27 @@ defineProps({
   }
 })
 
-defineEmits(['buy-iron', 'buy-bronze', 'buy-silver', 'upgrade-hammer'])
+const emit = defineEmits(['buy-iron', 'buy-bronze', 'buy-silver', 'upgrade-hammer'])
+
+const animatedButton = ref('')
+let animationTimer = null
+
+function animateAndEmit(button, event) {
+  animatedButton.value = ''
+  emit(event)
+
+  nextTick(function () {
+    animatedButton.value = button
+    clearTimeout(animationTimer)
+    animationTimer = setTimeout(function () {
+      animatedButton.value = ''
+    }, 420)
+  })
+}
+
+onBeforeUnmount(function () {
+  clearTimeout(animationTimer)
+})
 </script>
 
 <style scoped>
@@ -142,6 +166,25 @@ button {
   transform: scale(0.7);
 }
 
+.shop-button::before {
+  position: absolute;
+  top: -35%;
+  bottom: -35%;
+  left: -45%;
+  z-index: 2;
+  width: 24%;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 244, 190, 0.75),
+    transparent
+  );
+  opacity: 0;
+  transform: skewX(-18deg);
+}
+
 @media (hover: hover) {
   .shop-button:hover:not(:disabled) {
     filter: brightness(1.08) saturate(1.06);
@@ -151,12 +194,20 @@ button {
 }
 
 .shop-button:active:not(:disabled) {
-  animation: shop-button-press 0.22s ease-out;
+  transform: translateY(2px) scale(0.975);
   filter: brightness(1.15);
 }
 
-.shop-button:active:not(:disabled)::after {
-  animation: shop-button-flash 0.3s ease-out;
+.shop-button.is-animating {
+  animation: shop-button-press 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.25);
+}
+
+.shop-button.is-animating::before {
+  animation: shop-button-shine 0.38s ease-out;
+}
+
+.shop-button.is-animating::after {
+  animation: shop-button-flash 0.38s ease-out;
 }
 
 .shop-button:disabled {
@@ -234,13 +285,13 @@ background-position: center;
 
 @keyframes shop-button-press {
   0% {
-    transform: translateY(-2px) scale(1.015);
+    transform: translateY(0) scale(1);
   }
-  45% {
-    transform: translateY(3px) scale(0.965) rotate(-0.5deg);
+  30% {
+    transform: translateY(4px) scale(0.955) rotate(-0.7deg);
   }
-  75% {
-    transform: translateY(-1px) scale(1.025) rotate(0.3deg);
+  62% {
+    transform: translateY(-3px) scale(1.035) rotate(0.45deg);
   }
   100% {
     transform: translateY(0) scale(1);
@@ -261,13 +312,28 @@ background-position: center;
   }
 }
 
+@keyframes shop-button-shine {
+  0% {
+    left: -45%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    left: 125%;
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .shop-button {
     transition: none;
   }
 
-  .shop-button:active:not(:disabled),
-  .shop-button:active:not(:disabled)::after {
+  .shop-button.is-animating,
+  .shop-button.is-animating::before,
+  .shop-button.is-animating::after {
     animation: none;
   }
 }
