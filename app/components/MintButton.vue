@@ -116,20 +116,17 @@ function onClick() {
 }
 
 .coin-normal {
- background-image: url("C:\NuxtGame\click-one\public\anvil3.png") ;
-   box-shadow: 0 0 15px rgba(210, 199, 199, 0.712);
+  box-shadow: 0 0 15px rgba(210, 199, 199, 0.712);
   background-color: rgba(218, 196, 196, 0.404);
 }
 
 .coin-epic {
-  background-image: url("C:\NuxtGame\click-one\public\anvil3.png") ;
-     box-shadow: 0 0 15px rgba(206, 173, 90, 0.712);
+  box-shadow: 0 0 15px rgba(206, 173, 90, 0.712);
   background-color: rgba(237, 173, 56, 0.404);
 }
 
 .coin-legendary {
-  background-image: url("C:\NuxtGame\click-one\public\anvil3.png") ;
-    box-shadow: 0 0 15px rgba(204, 15, 15, 0.527);
+  box-shadow: 0 0 15px rgba(204, 15, 15, 0.527);
   background-color: rgba(101, 5, 5, 0.433);
 }
 </style>
