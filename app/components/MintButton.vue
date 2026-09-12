@@ -57,12 +57,6 @@ function onClick() {
 </script>
 
 <style scoped>
-button {
-
-}
-
-
-
 
 .mint-button {
   background-image: url("C:\NuxtGame\click-one\public\newShareSaveImage.png");
