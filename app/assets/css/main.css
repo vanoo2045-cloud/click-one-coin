@@ -8,11 +8,11 @@ body,
 }
 
 html,
-body {
-  background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
-}
+
 
 body {
+ 
+
   user-select: none;
   -webkit-user-select: none;
   overscroll-behavior: none;
@@ -26,6 +26,9 @@ button,
 .clickable {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 0 15px rgba(207, 186, 186, 0.712);
+  background-color: rgba(217, 204, 204, 0.404);
+  /* background-color: transparent; */
 }
 
 * {

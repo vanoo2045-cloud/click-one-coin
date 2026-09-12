@@ -1,18 +1,20 @@
 <template>
   <section class="bottom-zone">
-    <div class="panel">
-      <h2 class="panel-title">Управление</h2>
+   
+     
       <div class="shop-list">
+
+      
         <button
-          class="shop-button"
+          type="button"
+          class="shop-button upgrade_coin"
           :disabled="coins < ironCost"
           @click="$emit('buy-iron')"
         >
-          <span class="shop-name">Купить железную монету</span>
-          <span class="shop-meta">+10% к скорости · {{ ironCost }} монет</span>
+      
         </button>
 
-        <button
+        <!-- <button
           class="shop-button"
           :disabled="coins < bronzeCost"
           @click="$emit('buy-bronze')"
@@ -28,27 +30,19 @@
         >
           <span class="shop-name">Купить серебряную монету</span>
           <span class="shop-meta">+25% к скорости · {{ silverCost }} монет</span>
-        </button>
+        </button> -->
 
         <button
-          class="shop-button"
+          type="button"
+          class="shop-button upgrade_hammer"
           :disabled="coins < hammerCost"
           @click="$emit('upgrade-hammer')"
         >
-          <span class="shop-name">Улучшить молот</span>
-          <span class="shop-meta">+1 к ручному клику · {{ hammerCost }} монет</span>
         </button>
       </div>
 
-      <div class="stats">
-        <div>Железных монет: {{ ironCount }}</div>
-        <div>Бронзовых монет: {{ bronzeCount }}</div>
-        <div>Серебряных монет: {{ silverCount }}</div>
-        <div>Уровень молота: {{ hammerLevel }}</div>
-        <div>Скорость: {{ speedPercent }}%</div>
-        <div>Клик: +{{ clickPower }}</div>
-      </div>
-    </div>
+ 
+   
   </section>
 </template>
 
@@ -104,19 +98,14 @@ defineEmits(['buy-iron', 'buy-bronze', 'buy-silver', 'upgrade-hammer'])
 </script>
 
 <style scoped>
-.bottom-zone {
-  background: linear-gradient(180deg, #2d2318, #241c13);
-  min-height: 50dvh;
-  padding: 16px;
+
+button {
+  background-color: transparent;
 }
 
-.panel {
-  backdrop-filter: blur(4px);
-  background: rgba(255, 248, 235, 0.08);
-  border-radius: 24px 24px 0 0;
-  height: 100%;
-  padding: 18px;
-}
+
+
+
 
 .panel-title {
   color: #f6ead2;
@@ -131,26 +120,48 @@ defineEmits(['buy-iron', 'buy-bronze', 'buy-silver', 'upgrade-hammer'])
 }
 
 .shop-button {
-  background: #f2e3c2;
-  border: none;
-  border-radius: 16px;
-  color: #2b2117;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-height: 64px;
-  padding: 14px 16px;
-  text-align: left;
-  transition: transform 0.06s ease, opacity 0.2s ease;
-  width: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transform-origin: center;
+  transition:
+    transform 0.16s ease,
+    filter 0.16s ease,
+    box-shadow 0.16s ease,
+    opacity 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.shop-button:active {
-  transform: scale(0.99);
+.shop-button::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(255, 239, 166, 0.5), transparent 58%);
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+@media (hover: hover) {
+  .shop-button:hover:not(:disabled) {
+    filter: brightness(1.08) saturate(1.06);
+    transform: translateY(-2px) scale(1.015);
+    box-shadow: 0 8px 16px rgba(40, 24, 9, 0.28);
+  }
+}
+
+.shop-button:active:not(:disabled) {
+  animation: shop-button-press 0.22s ease-out;
+  filter: brightness(1.15);
+}
+
+.shop-button:active:not(:disabled)::after {
+  animation: shop-button-flash 0.3s ease-out;
 }
 
 .shop-button:disabled {
   opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .shop-name {
@@ -172,4 +183,93 @@ defineEmits(['buy-iron', 'buy-bronze', 'buy-silver', 'upgrade-hammer'])
   margin-top: 18px;
   padding: 14px;
 }
+
+.upgrade_coin {
+  background-image: url("C:\NuxtGame\click-one\public\ee.png");
+background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 400px;
+  height: 100px;
+  
+
+     /* background: #f2e3c2; */
+  border: none;
+  border-radius: 16px;
+  color: #2b2117;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 64px;
+
+  text-align: left;
+  
+
+}
+
+.upgrade_hammer {
+  background-image: url("C:\NuxtGame\click-one\public\rr.png");
+ background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 400px;
+  height: 100px;
+  
+
+     /* background: #f2e3c2; */
+  border: none;
+  border-radius: 16px;
+  color: #2b2117;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 64px;
+
+  text-align: left;
+  
+
+}
+
+
+
+@keyframes shop-button-press {
+  0% {
+    transform: translateY(-2px) scale(1.015);
+  }
+  45% {
+    transform: translateY(3px) scale(0.965) rotate(-0.5deg);
+  }
+  75% {
+    transform: translateY(-1px) scale(1.025) rotate(0.3deg);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shop-button-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  35% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-button {
+    transition: none;
+  }
+
+  .shop-button:active:not(:disabled),
+  .shop-button:active:not(:disabled)::after {
+    animation: none;
+  }
+}
+
 </style>

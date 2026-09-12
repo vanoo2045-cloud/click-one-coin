@@ -2,10 +2,7 @@
   <main class="page">
     <MintArea
       :coins="coins"
-      @mint="handleMint"
-    />
-    <ShopPanel
-      :coins="coins"
+      :coins-per-second="coinsPerSecond"
       :iron-count="ironCount"
       :bronze-count="bronzeCount"
       :silver-count="silverCount"
@@ -16,6 +13,7 @@
       :bronze-cost="bronzeCost"
       :silver-cost="silverCost"
       :hammer-cost="hammerCost"
+      @mint="handleMint"
       @buy-iron="buyIron"
       @buy-bronze="buyBronze"
       @buy-silver="buySilver"
@@ -27,7 +25,6 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import MintArea from '../components/MintArea.vue'
-import ShopPanel from '../components/ShopPanel.vue'
 
 const coins = ref(0)
 
@@ -58,6 +55,10 @@ const speedPercent = computed(function () {
 
 const currentIntervalMs = computed(function () {
   return baseIntervalMs / speedMultiplier.value
+})
+
+const coinsPerSecond = computed(function () {
+  return 1000 / currentIntervalMs.value
 })
 
 function addAutoCoin() {
@@ -134,6 +135,11 @@ onBeforeUnmount(function () {
 .page {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  /* min-height: 100dvh; */
+
+    background-image: url("/ima5555withoutge.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-top: 50px;
 }
 </style>

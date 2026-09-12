@@ -1,14 +1,15 @@
 <template>
   <button
     class="mint-button clickable"
-    :class="[coinColorClass, { 'is-disabled': disabled }]"
+     :class="[coinColorClass, { 'is-disabled': disabled }]" 
     :disabled="disabled"
     @touchstart.passive="onTouchStart"
     @click="onClick"
   >
-    <span class="coin-emoji">⚔️</span>
-    Чеканить
+    
   </button>
+
+
 </template>
 
 <script setup>
@@ -31,7 +32,7 @@ let lastTouchTime = 0
 
 const coinColorClass = computed(() => {
   if (props.coins >= 10000) return 'coin-legendary'
-  if (props.coins >= 1000) return 'coin-epic'
+  if (props.coins >= 100) return 'coin-epic'
   return 'coin-normal'
 })
 
@@ -56,21 +57,33 @@ function onClick() {
 </script>
 
 <style scoped>
+button {
+
+}
+
+
+
+
 .mint-button {
+  background-image: url("C:\NuxtGame\click-one\public\newShareSaveImage.png");
+  background-size:contain;
+  background-repeat: no-repeat;
   align-items: center;
-  animation: floatGlow 2s ease-in-out infinite;
+  /* animation: floatGlow 2s ease-in-out infinite; */
   border: none;
-  border-radius: 999px;
+  /* border-radius: 999px; */
   cursor: pointer;
   display: flex;
   flex-direction: column;
   font-size: 28px;
   font-weight: 800;
   gap: 8px;
-  height: 220px;
+  height: 40vh;
   justify-content: center;
   transition: transform 0.06s ease;
-  width: 220px;
+  width: 25vh;
+  margin-top: 15%;
+  
 }
 
 .mint-button:active:not(:disabled) {
@@ -109,20 +122,19 @@ function onClick() {
 }
 
 .coin-normal {
-  background: linear-gradient(180deg, #f7d86f, #d39c1d);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), inset 0 4px 12px rgba(255, 255, 255, 0.35);
-  color: #352300;
+ background-image: url("C:\NuxtGame\click-one\public\newShareSaveImage.png") ;
+   box-shadow: 0 0 15px rgba(210, 199, 199, 0.712);
+  background-color: rgba(218, 196, 196, 0.404);
 }
 
 .coin-epic {
-  background: linear-gradient(180deg, #ff6b6b, #cc3300);
-  box-shadow: 0 12px 28px rgba(255, 50, 50, 0.3), inset 0 4px 12px rgba(255, 255, 200, 0.4);
-  color: #4a1500;
+
+     box-shadow: 0 0 15px rgba(206, 173, 90, 0.712);
+  background-color: rgba(237, 173, 56, 0.404);
 }
 
 .coin-legendary {
-  background: linear-gradient(180deg, #6eff7a, #1f9e2e);
-  box-shadow: 0 12px 28px rgba(80, 255, 80, 0.3), inset 0 4px 12px rgba(200, 255, 200, 0.5);
-  color: #1a3a00;
+    box-shadow: 0 0 15px rgba(204, 15, 15, 0.527);
+  background-color: rgba(101, 5, 5, 0.433);
 }
 </style>

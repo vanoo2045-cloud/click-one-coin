@@ -1,4 +1,6 @@
 <template>
+
+ <div class="background">
   <section class="top-zone">
     <GreetingModal
       v-if="!gameStarted"
@@ -18,21 +20,46 @@
       @close="onVictoryClosed"
     />
 
-    <CoinCounter :coins="coins" />
+    <div class="top-bar">
+      <CoinCounter :coins="coins" />
+      <SpeedCounter :speed="coinsPerSecond" />
+    </div>
 
-    <div class="mint-wrap">
-      <MintButton
+    <MintButton
         :coins="coins"
         :disabled="!gameStarted || victoryVisible"
         @mint="handleMint"
       />
-    </div>
+    
+
+  
+
+       <ShopPanel
+      :coins="coins"
+      :iron-count="ironCount"
+      :bronze-count="bronzeCount"
+      :silver-count="silverCount"
+      :hammer-level="hammerLevel"
+      :click-power="clickPower"
+      :speed-percent="speedPercent"
+      :iron-cost="ironCost"
+      :bronze-cost="bronzeCost"
+      :silver-cost="silverCost"
+      :hammer-cost="hammerCost"
+      @buy-iron="emit('buy-iron')"
+      @buy-bronze="emit('buy-bronze')"
+      @buy-silver="emit('buy-silver')"
+      @upgrade-hammer="emit('upgrade-hammer')"
+    />
+ 
   </section>
+  </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import CoinCounter from './CoinCounter.vue'
+import SpeedCounter from './SpeedCounter.vue'
 import MintButton from './MintButton.vue'
 import GreetingModal from './GreetingModal.vue'
 import DialogueModal from './DialogueModal.vue'
@@ -46,10 +73,60 @@ const props = defineProps({
   coins: {
     type: Number,
     required: true
+  },
+  coinsPerSecond: {
+    type: Number,
+    required: true
+  },
+  ironCount: {
+    type: Number,
+    required: true
+  },
+  bronzeCount: {
+    type: Number,
+    required: true
+  },
+  silverCount: {
+    type: Number,
+    required: true
+  },
+  hammerLevel: {
+    type: Number,
+    required: true
+  },
+  clickPower: {
+    type: Number,
+    required: true
+  },
+  speedPercent: {
+    type: Number,
+    required: true
+  },
+  ironCost: {
+    type: Number,
+    required: true
+  },
+  bronzeCost: {
+    type: Number,
+    required: true
+  },
+  silverCost: {
+    type: Number,
+    required: true
+  },
+  hammerCost: {
+    type: Number,
+    required: true
   }
 })
 
-const emit = defineEmits(['mint'])
+const emit = defineEmits([
+  'mint',
+  'buy-iron',
+  'buy-bronze',
+  'buy-silver',
+  'upgrade-hammer'
+])
 
 const dialoguesList = ref([])
 const gameStarted = ref(false)
@@ -110,18 +187,32 @@ watch(() => props.coins, () => {
 </script>
 
 <style scoped>
+
+
 .top-zone {
   position: relative;
-  min-height: 50dvh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background-image: url("/FD8E1E8C-920A-4D33-93D6-8C86466D501F.jpeg");
+  /* background-image: url("/FD8E1E8C-920A-4D33-93D6-8C86466D501F.jpeg"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.top-bar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 5;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .mint-wrap {
@@ -131,4 +222,6 @@ watch(() => props.coins, () => {
   justify-content: center;
   margin-top: 20px;
 }
+
+
 </style>

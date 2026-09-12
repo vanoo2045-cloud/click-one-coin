@@ -51,8 +51,8 @@ const { needRefresh, offlineReady, updateServiceWorker } = useRegisterSW({
   gap: 0.75rem;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  background: rgba(20, 20, 30, 0.92);
-  color: #fff;
+  /* background color: #fff;: rgba(20, 20, 30, 0.92); */
+ 
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   max-width: calc(100vw - 2rem);
 }
