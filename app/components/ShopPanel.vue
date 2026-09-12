@@ -185,7 +185,7 @@ button {
 }
 
 .upgrade_coin {
-  background-image: url("C:\NuxtGame\click-one\public\ee.png");
+  background-image: url("/click-one-coin/ee.png");
 background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -208,7 +208,7 @@ background-position: center;
 }
 
 .upgrade_hammer {
-  background-image: url("C:\NuxtGame\click-one\public\rr.png");
+  background-image: url("/click-one-coin/rr.png");
  background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
