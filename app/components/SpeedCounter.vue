@@ -23,28 +23,27 @@ const formattedSpeed = computed(function () {
 
 <style scoped>
 .speed-counter {
-  backdrop-filter: blur(6px);
-  background: rgba(18, 18, 18, 0.72);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  padding: 0;
   box-sizing: border-box;
   color: #f5e7c7;
-  width: 80px;
-  height: 30px;
-  min-width: 0;
-  padding: 10px 14px;
-}
-
-.speed-label {
-  font-size: 13px;
-  margin-bottom: 2px;
-  opacity: 0.85;
+  background: transparent;
 }
 
 .speed-value {
-  font-size: clamp(14px, 4vw, 18px);
+  max-width: 100%;
+  font-size: var(--top-bar-text, 16px);
   font-weight: 800;
   line-height: 1;
+  text-align: right;
+  text-shadow: 1px 2px 2px #251203;
   white-space: nowrap;
+  font-size: 20px;
+  padding-right: 50%;
 }
 </style>

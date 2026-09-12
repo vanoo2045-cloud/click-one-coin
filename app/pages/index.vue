@@ -137,7 +137,7 @@ onBeforeUnmount(function () {
   flex-direction: column;
   /* min-height: 100dvh; */
 
-    background-image: url("/ima5555withoutge.png");
+    background-image: url("/tt.png");
     background-size: 100%;
     background-repeat: no-repeat;
     margin-top: 50px;
