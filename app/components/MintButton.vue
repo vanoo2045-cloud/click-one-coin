@@ -85,7 +85,7 @@ onBeforeUnmount(function () {
 .mint-button {
   position: relative;
   overflow: visible;
-  background-image: url("/click-one-coin/anvil3.png");
+  background-image: url("/anvil3.png");
   background-size:contain;
   background-repeat: no-repeat;
   align-items: center;

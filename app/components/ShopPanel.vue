@@ -236,7 +236,7 @@ button {
 }
 
 .upgrade_coin {
-  background-image: url("/click-one-coin/ee.png");
+  background-image: url("/ee.png");
 background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -259,7 +259,7 @@ background-position: center;
 }
 
 .upgrade_hammer {
-  background-image: url("/click-one-coin/rr.png");
+  background-image: url("/rr.png");
  background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
